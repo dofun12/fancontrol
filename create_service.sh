@@ -3,6 +3,7 @@
 SERVICE_NAME="fancontrol"
 SERVICE_FILE="$SERVICE_NAME.service"
 DESCRIPTION="Raspberry Fan Control"
+PIPENV_BIN=$(whereis pipenv|awk '{print $2}')
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 touch $SERVICE_FILE
@@ -11,11 +12,10 @@ cat > $DIR/$SERVICE_FILE <<EOL
 Description=${DESCRIPTION}
 
 [Service]
-Environment="PATH=${PATH}"
 Restart=always
 User=${USER}
 WorkingDirectory=${DIR}
-ExecStart=pipenv run python main.py >> ${DIR}/log.txt 2>&1
+ExecStart=${PIPENV_BIN} run python main.py >> ${DIR}/log.txt 2>&1
 
 [Install]
 WantedBy=multi-user.target
