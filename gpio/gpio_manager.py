@@ -2,15 +2,16 @@ import subprocess
 import logutil
 
 try:
-    logutil.info('Starting Real MODE')
     from RPi.GPIO import GPIO
-except ImportError:
-    logutil.info('Starting Simulator MODE')
+
+    logutil.info('Starting Real MODE')
+except ImportError as e:
+    logutil.error(e)
     import simulator.gpio as GPIO
+    logutil.info('Starting Simulator MODE')
+
 
 class GPioManager:
-
-
     # from EmulatorGUI import GPIO
     # from gpiozero import OutputDevice
     ON_THRESHOLD = 65  # (degrees Celsius) Fan kicks on at this temperature.
@@ -20,13 +21,15 @@ class GPioManager:
 
     config = None
 
-    def __init__(self,config):
+    def __init__(self, config):
 
         self.config = config
         self.GPIO_PIN = int(config['gpio']['GPIO_PIN'])  # Which GPIO pin you're using to control the fan.
         self.ON_THRESHOLD = int(config['gpio']['ON_THRESHOLD'])  # (degrees Celsius) Fan kicks on at this temperature.
-        self.OFF_THRESHOLD = int(config['gpio']['OFF_THRESHOLD'])  # (degress Celsius) Fan shuts off at this temperature.
-        self.SLEEP_INTERVAL = int(config['gpio']['SLEEP_INTERVAL'])  # (seconds) How often we check the core temperature.
+        self.OFF_THRESHOLD = int(
+            config['gpio']['OFF_THRESHOLD'])  # (degress Celsius) Fan shuts off at this temperature.
+        self.SLEEP_INTERVAL = int(
+            config['gpio']['SLEEP_INTERVAL'])  # (seconds) How often we check the core temperature.
 
         try:
             logutil.info('Setuping and BCM....')
@@ -37,15 +40,11 @@ class GPioManager:
 
         GPIO.output(self.GPIO_PIN, False)
 
-
     def turnOn(self):
         GPIO.output(self.GPIO_PIN, True)
 
-
     def turnOFF(self):
         GPIO.output(self.GPIO_PIN, False)
-
-
 
     def get_temp(self):
         """Get the core temperature.
