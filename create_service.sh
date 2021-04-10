@@ -23,5 +23,6 @@ EOL
 
 sudo cp $SERVICE_FILE /lib/systemd/system/
 sudo systemctl daemon-reload
-echo "USE: 'sudo service $SERVICE_NAME' to Start"
+echo "USE: 'sudo service $SERVICE_NAME start' to Start"
+echo "USE: 'sudo systemctl enable $SERVICE_NAME' to Start at boot"
 
