@@ -19,7 +19,8 @@ if __name__ == '__main__':
 
     config = configparser.ConfigParser()
     config.read(default_config)
-    if config['default']['TEST_MODE']:
+    if config['default']['TEST_MODE'] == "true":
+        print("RUNNING ON TEST MODE")
         manager = GPioManagerDummy(config)
     else:
         manager = GPioManager(config)
