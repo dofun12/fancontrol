@@ -11,7 +11,7 @@ cat > $DIR/$SERVICE_FILE <<EOL
 Description=${DESCRIPTION}
 
 [Service]
-Environment="PATH=${PATH}
+Environment="PATH=${PATH}"
 Restart=always
 User=${USER}
 WorkingDirectory=${DIR}
