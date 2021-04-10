@@ -12,9 +12,10 @@ SLEEP_INTERVAL = 1  # (seconds) How often we check the core temperature.
 
 if __name__ == '__main__':
     default_config = 'config.ini'
-    profile = sys.argv[1]
-    if profile.startswith('--profile='):
-        default_config = 'config_'+profile.split("=")[1]+'.ini'
+    if len(sys.argv) > 0:
+        profile = sys.argv[1]
+        if profile.startswith('--profile='):
+            default_config = 'config_'+profile.split("=")[1]+'.ini'
 
     config = configparser.ConfigParser()
     config.read(default_config)
