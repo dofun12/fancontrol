@@ -5,8 +5,8 @@ SERVICE_FILE="$SERVICE_NAME.service"
 DESCRIPTION="Raspberry Fan Control"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-touch SERVICE_FILE
-cat > $DIR/SERVICE_FILE <<EOL
+touch $SERVICE_FILE
+cat > $DIR/$SERVICE_FILE <<EOL
 [Unit]
 Description=${DESCRIPTION}
 
