@@ -40,7 +40,6 @@ if __name__ == '__main__':
     Run = True
 
     logutil.info("Fazendo aquele clean maroto")
-    manager.cleanup()
     manager.turnOFF()
     while Run:
         try:
