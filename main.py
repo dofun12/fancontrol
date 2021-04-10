@@ -8,6 +8,10 @@ from gpio.gpio_manager_dummy import GPioManagerDummy
 from mqtt.mqtt_manager import MqttManager
 
 if __name__ == '__main__':
+    logutil.info("  #################################")
+    logutil.info("  ### Starting... FANCONTROL :D ###")
+    logutil.info("  #################################")
+
     default_config = 'config.ini'
     if len(sys.argv) > 1:
         profile = sys.argv[1]
@@ -35,6 +39,8 @@ if __name__ == '__main__':
     last_status = False
     Run = True
 
+    logutil.info("Fazendo aquele clean maroto")
+    manager.cleanup()
     manager.turnOFF()
     while Run:
         try:
