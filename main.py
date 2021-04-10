@@ -6,16 +6,12 @@ from gpio.gpio_manager import GPioManager
 from gpio.gpio_manager_dummy import GPioManagerDummy
 from mqtt.mqtt_manager import MqttManager
 
-ON_THRESHOLD = 65  # (degrees Celsius) Fan kicks on at this temperature.
-OFF_THRESHOLD = 45  # (degress Celsius) Fan shuts off at this temperature.
-SLEEP_INTERVAL = 1  # (seconds) How often we check the core temperature.
-
 if __name__ == '__main__':
     default_config = 'config.ini'
     if len(sys.argv) > 1:
         profile = sys.argv[1]
         if profile.startswith('--profile='):
-            default_config = 'config_'+profile.split("=")[1]+'.ini'
+            default_config = 'config_' + profile.split("=")[1] + '.ini'
 
     config = configparser.ConfigParser()
     config.read(default_config)
@@ -26,6 +22,10 @@ if __name__ == '__main__':
         manager = GPioManager(config)
 
     mqtt = MqttManager(config)
+
+    ON_THRESHOLD = int(config['gpio']['ON_THRESHOLD'])
+    OFF_THRESHOLD = int(config['gpio']['OFF_THRESHOLD'])
+    SLEEP_INTERVAL = int(config['gpio']['SLEEP_INTERVAL'])
 
     # Validate the on and off thresholds
     if OFF_THRESHOLD >= ON_THRESHOLD:
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                 print("OFF...")
 
             if temp >= ON_THRESHOLD:
-               must_spin = True
+                must_spin = True
 
             if temp <= OFF_THRESHOLD:
                 must_spin = False
@@ -53,7 +53,6 @@ if __name__ == '__main__':
             if must_spin and must_spin != last_status:
                 print("Ligando...")
                 manager.turnOn()
-
 
             if not must_spin and must_spin != last_status:
                 print("Desligando...")
