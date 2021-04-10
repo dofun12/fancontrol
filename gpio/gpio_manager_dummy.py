@@ -1,5 +1,5 @@
 import random
-
+import logutil
 
 class GPioManagerDummy:
     last_generated_temp = 40
@@ -13,11 +13,11 @@ class GPioManagerDummy:
         self.config = config
 
     def turnOn(self):
-        print('Turning on')
+        logutil.info('Turning on')
 
 
     def turnOFF(self):
-        print('Turning off')
+        logutil.info('Turning off')
 
 
     def get_temp_test(self):
@@ -27,7 +27,7 @@ class GPioManagerDummy:
         if temp >= self.threshold_max or temp <= self.threshold_min:
             self.increment = (self.increment * -1)
 
-        print('Test temp '+str(temp))
+        logutil.info('Test temp '+str(temp))
         return temp
 
     def get_temp(self):
@@ -35,4 +35,4 @@ class GPioManagerDummy:
 
 
     def cleanup(self):
-        print('Cleanup')
+        logutil.info('Cleanup')

@@ -15,7 +15,7 @@ Description=${DESCRIPTION}
 Restart=always
 User=${USER}
 WorkingDirectory=${DIR}
-ExecStart=${PIPENV_BIN} run python main.py >> ${DIR}/log.txt 2>&1
+ExecStart=${PIPENV_BIN} run python main.py
 
 [Install]
 WantedBy=multi-user.target

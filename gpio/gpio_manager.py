@@ -1,4 +1,5 @@
 import subprocess
+import logutil
 
 try:
     from RPi.GPIO import GPIO
@@ -29,7 +30,7 @@ class GPioManager:
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(self.GPIO_PIN, GPIO.OUT)
         except AttributeError:
-            print('Skipping BCM and Setup')
+            logutil.info('Skipping BCM and Setup')
 
 
         GPIO.output(self.GPIO_PIN, False)
@@ -58,7 +59,7 @@ class GPioManager:
         temp_str = output.stdout.decode()
         try:
             value = float(temp_str.split('=')[1].split('\'')[0])
-            print(value)
+            logutil.info(value)
             return value
         except (IndexError, ValueError):
             raise RuntimeError('Could not parse temperature output.')

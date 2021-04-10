@@ -1,6 +1,7 @@
 import configparser
 import time
 import sys
+import logutil
 
 from gpio.gpio_manager import GPioManager
 from gpio.gpio_manager_dummy import GPioManagerDummy
@@ -16,7 +17,7 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read(default_config)
     if config['default']['TEST_MODE'] == "true":
-        print("RUNNING ON TEST MODE")
+        logutil.info("RUNNING ON TEST MODE")
         manager = GPioManagerDummy(config)
     else:
         manager = GPioManager(config)
@@ -39,10 +40,10 @@ if __name__ == '__main__':
             temp = manager.get_temp()
 
             if last_status:
-                print("RUNNING...")
+                logutil.info("RUNNING...")
 
             if not last_status:
-                print("OFF...")
+                logutil.info("OFF...")
 
             if temp >= ON_THRESHOLD:
                 must_spin = True
@@ -51,23 +52,23 @@ if __name__ == '__main__':
                 must_spin = False
 
             if must_spin and must_spin != last_status:
-                print("Ligando...")
+                logutil.info("Ligando...")
                 manager.turnOn()
 
             if not must_spin and must_spin != last_status:
-                print("Desligando...")
+                logutil.info("Desligando...")
                 manager.turnOFF()
 
             last_status = must_spin
             mqtt.publish_temp(temp)
 
         except KeyboardInterrupt:
-            print("Keyboard Interrupt")
+            logutil.info("Keyboard Interrupt")
             Run = False
         except Exception as e:
-            print(e)
-            print("Error")
+            logutil.info(e)
+            logutil.info("Error")
         finally:
             time.sleep(SLEEP_INTERVAL)
-    print("Clean")
+    logutil.info("Clean")
     manager.cleanup()

@@ -1,1 +1,3 @@
 config_dev.ini
+*.log
+*.log*
