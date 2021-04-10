@@ -34,6 +34,8 @@ if __name__ == '__main__':
 
     last_status = False
     Run = True
+
+    manager.turnOFF()
     while Run:
         try:
             must_spin = last_status

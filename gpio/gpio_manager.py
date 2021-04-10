@@ -2,8 +2,10 @@ import subprocess
 import logutil
 
 try:
+    logutil.info('Starting Real MODE')
     from RPi.GPIO import GPIO
 except ImportError:
+    logutil.info('Starting Simulator MODE')
     import simulator.gpio as GPIO
 
 class GPioManager:
@@ -27,15 +29,13 @@ class GPioManager:
         self.SLEEP_INTERVAL = int(config['gpio']['SLEEP_INTERVAL'])  # (seconds) How often we check the core temperature.
 
         try:
+            logutil.info('Setuping and BCM....')
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(self.GPIO_PIN, GPIO.OUT)
         except AttributeError:
             logutil.info('Skipping BCM and Setup')
 
-
         GPIO.output(self.GPIO_PIN, False)
-
-
 
 
     def turnOn(self):
