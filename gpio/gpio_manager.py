@@ -2,8 +2,7 @@ import subprocess
 import logutil
 
 try:
-    from RPi.GPIO import GPIO
-
+    import RPi.GPIO as GPIO
     logutil.info('Starting Real MODE')
 except ImportError as e:
     logutil.error(e)
